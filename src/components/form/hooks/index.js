@@ -6,7 +6,7 @@ function useForm({ initialValues, validate }) {
   const [touched, setTouchedFields] = useState({});
 
   useEffect(() => {
-    validateValues(values);
+    setErrors(validate(values));
   }, [values]);
 
   function handleChange(event) {
@@ -24,10 +24,6 @@ function useForm({ initialValues, validate }) {
       ...touched,
       [fieldName]: true,
     });
-  }
-
-  function validateValues(values) {
-    setErrors(validate(values));
   }
 
   return {
