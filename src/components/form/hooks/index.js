@@ -6,8 +6,12 @@ function useForm({ initialValues, validate }) {
   const [touched, setTouchedFields] = useState({});
 
   useEffect(() => {
-    setErrors(validate(values));
-  }, [values, validate]);
+    function checkValues(formValues) {
+      setErrors(validate(formValues));
+    }
+
+    checkValues(values);
+  }, [values]);
 
   function handleChange(event) {
     const fieldName = event.target.name;
