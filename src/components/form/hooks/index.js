@@ -3,11 +3,10 @@ import { useEffect, useState } from "react";
 function useForm({ initialValues, validate }) {
   const [errors, setErrors] = useState(initialValues);
   const [values, setValues] = useState(initialValues);
-  const [touched, setTouchedFields] = useState({});
-
   useEffect(() => {
     setErrors(validate(values));
-  }, [values, validate]);
+  });
+  const [touched, setTouchedFields] = useState({});
 
   function handleChange(event) {
     const fieldName = event.target.name;
