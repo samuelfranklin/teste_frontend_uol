@@ -7,7 +7,7 @@ function useForm({ initialValues, validate }) {
 
   useEffect(() => {
     setErrors(validate(values));
-  }, [values]);
+  }, [values, validate]);
 
   function handleChange(event) {
     const fieldName = event.target.name;
