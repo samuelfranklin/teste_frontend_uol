@@ -13,7 +13,7 @@ const isEmpty = function (value) {
 };
 
 const isNull = function (value) {
-  if (typeof value != undefined && value !== null) {
+  if (typeof value !== undefined && value !== null) {
     return false;
   } else {
     return true;
@@ -58,7 +58,7 @@ function cpfValidator(inputCpf) {
     const secondCheckDigit = parseInt(cpf.substring(10, 11));
 
     const numberSequence =
-      cont == 10
+      cont === 10
         ? Array.from(cpf.substring(0, 9)).map((item) => parseInt(item))
         : Array.from(cpf.substring(0, 10)).map((item) => parseInt(item));
 
@@ -73,11 +73,11 @@ function cpfValidator(inputCpf) {
         .reduce((prev, next) => prev + next, 0) %
         controlNumber);
 
-    if (cont == 10)
-      return firstCheckDigit == sum || (firstCheckDigit == 0 && sum >= 10);
+    if (cont === 10)
+      return firstCheckDigit === sum || (firstCheckDigit === 0 && sum >= 10);
 
-    if (cont == 11)
-      return secondCheckDigit == sum || (secondCheckDigit == 0 && sum >= 10);
+    if (cont === 11)
+      return secondCheckDigit === sum || (secondCheckDigit === 0 && sum >= 10);
   }
 
   const isValidFirstSecurityNumber = validate(10);
@@ -102,16 +102,15 @@ function phoneValidator(phoneNumber) {
 }
 
 function translateStatus(status) {
-  switch (status)
-  {
+  switch (status) {
     case "active":
-      return "Ativo"
+      return "Ativo";
     case "inactive":
-      return "Inativo"
+      return "Inativo";
     case "waiting":
-      return "Aguardando"
+      return "Aguardando";
     case "disabled":
-      return "Desativado"
+      return "Desativado";
   }
 }
 
@@ -122,5 +121,5 @@ export {
   emailValidator,
   phoneValidator,
   clientName,
-  translateStatus
+  translateStatus,
 };
