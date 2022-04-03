@@ -9,7 +9,6 @@ import {
   cpfValidator,
   phoneValidator,
   emailValidator,
-  clientName,
 } from "../../helpers";
 
 import "./style.css";
