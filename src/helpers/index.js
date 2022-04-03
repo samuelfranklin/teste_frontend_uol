@@ -13,7 +13,7 @@ const isEmpty = function (value) {
 };
 
 const isNull = function (value) {
-  if (typeof value !== undefined && value !== null) {
+  if (String(value) !== "undefined" && value !== null) {
     return false;
   } else {
     return true;
@@ -111,6 +111,8 @@ function translateStatus(status) {
       return "Aguardando";
     case "disabled":
       return "Desativado";
+    default:
+      throw new Error();
   }
 }
 

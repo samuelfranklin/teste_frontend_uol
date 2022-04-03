@@ -60,11 +60,11 @@ const updateClient = function (client) {
     }
 
     const clientList = JSON.parse(localStorage.getItem("clients"));
-    if (!clientList.find(({ id }) => id == client.id)) {
+    if (!clientList.find(({ id }) => id === client.id)) {
       throw new Error({ message: "Cliente não encontrado", status: "error" });
     }
 
-    const newClientList = clientList.filter(({ id }) => id != client.id);
+    const newClientList = clientList.filter(({ id }) => id !== client.id);
     newClientList.push(client);
     localStorage.clear();
     localStorage.setItem("clients", JSON.stringify(newClientList));
@@ -84,13 +84,13 @@ const removeClient = function (client) {
       });
     }
     const clientList = JSON.parse(localStorage.getItem("clients"));
-    if (!clientList.find(({ id }) => id == client.id)) {
+    if (!clientList.find(({ id }) => id === client.id)) {
       throw new Error({
         message: "Cliente não encontrado",
         status: "error",
       });
     }
-    const newClientList = clientList.filter(({ id }) => id != client.id);
+    const newClientList = clientList.filter(({ id }) => id !== client.id);
     localStorage.clear();
     localStorage.setItem("clients", JSON.stringify(newClientList));
     return { message: "cliente removido com sucesso", status: "success" };
@@ -111,6 +111,8 @@ const submitForm = function (client, formType) {
     case "remove":
       removeClient(client);
       break;
+    default:
+      throw new Error();
   }
 };
 
