@@ -3,9 +3,7 @@ import { isNull } from '../helpers';
 
 const getClientList = async () => {
   try {
-    const { customers } = await axios('/customers.json').then(
-      (response) => response.data,
-    );
+    const { customers } = await axios('https://test-frontend-uolpp.web.app/customers.json').then((response) => response.data);
     localStorage.setItem('clients', JSON.stringify(customers));
     return customers || [];
   } catch (error) {
