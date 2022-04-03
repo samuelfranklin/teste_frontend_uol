@@ -8,12 +8,7 @@ import './style.css';
 export default function UpdateClient() {
   const { id } = useParams();
   let selectedClient = null;
-
-  try {
-    selectedClient = getClient(id);
-  } catch (error) {
-    console.error(error);
-  }
+  selectedClient = getClient(id);
 
   return (
     <div id="update-client">
