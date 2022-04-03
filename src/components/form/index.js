@@ -1,8 +1,9 @@
-import React, { useCallback, useState, useEffect } from 'react';
+import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { Link, useNavigate } from 'react-router-dom';
 import { useNotification } from 'react-hook-notification';
 import { createClient } from '../../services/clients';
+import useForm from './Hooks/useForm';
 
 import {
   isEmpty,
@@ -12,42 +13,6 @@ import {
 } from '../../helpers';
 
 import './style.css';
-
-function useForm({ initialValues, validate }) {
-  const [errors, setErrors] = useState(initialValues);
-  const [values, setValues] = useState(initialValues);
-  const [touched, setTouchedFields] = useState({});
-
-  useEffect(() => {
-    setErrors(validate(values));
-  }, [validate, values]);
-
-  function handleChange(event) {
-    const fieldName = event.target.name;
-    const { value } = event.target;
-    setValues({
-      ...values,
-      [fieldName]: value,
-    });
-  }
-
-  function handleBlur(event) {
-    const fieldName = event.target.name;
-    setTouchedFields({
-      ...touched,
-      [fieldName]: true,
-    });
-  }
-
-  return {
-    values,
-    errors,
-    touched,
-    handleBlur,
-    setErrors,
-    handleChange,
-  };
-}
 
 function Form({ values }) {
   const navigate = useNavigate();
@@ -84,7 +49,7 @@ function Form({ values }) {
     { value: '', text: 'Selecione' },
     { value: 'inactive', text: 'Desativado' },
     { value: 'active', text: 'Ativo' },
-    { value: 'disabled', text: 'Desativado' },
+    { value: 'disabled', text: 'Desabilitado' },
     { value: 'waiting', text: 'Aguardando' },
   ];
 
