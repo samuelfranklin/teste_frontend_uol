@@ -1,8 +1,8 @@
-import React from "react";
+import React, { useCallback, useState, useEffect } from "react";
+import P from "prop-types";
 import { Link, useNavigate } from "react-router-dom";
 import { submitForm } from "../../services/clients";
 import { useNotification } from "react-hook-notification";
-import { useForm } from "./hooks";
 
 import {
   isEmpty,
@@ -14,37 +14,78 @@ import {
 
 import "./style.css";
 
-export default function Form(props) {
-  const { client, formType } = props;
-  const initialValues = {
-    name: formType == "update" ? client.name : "",
-    id: formType == "update" ? client.id : "",
-    email: formType == "update" ? client.email : "",
-    phone: formType == "update" ? client.phone : "",
-    status: formType == "update" ? client.status : "",
-  };
-  const form = useForm({
-    initialValues,
-    validate: function (field) {
-      const errors = {};
-      if (Array.from(field.name).length < 3) errors.name = "Nome Curto demais";
-      if (isEmpty(field.name)) errors.name = "Campo nome é obrigatório";
-      if (!cpfValidator(field.id)) errors.id = "CPF Inválido.";
-      if (isEmpty(field.id)) errors.id = "Campo CPF é obrigatório.";
-      if (!emailValidator(field.email)) errors.email = "E-Mail Inválido.";
-      if (isEmpty(field.email)) errors.email = "Campo E-MAIL é obrigatório.";
-      if (!phoneValidator(field.phone))
-        errors.phone = "Número de telefone inválido";
-      if (isEmpty(field.status) || field.status.toLowerCase() === "selecione")
-        errors.status = "Selecione um status para o cliente.";
+function useForm({ initialValues, validate }) {
+  const [errors, setErrors] = useState(initialValues);
+  const [values, setValues] = useState(initialValues);
+  const [touched, setTouchedFields] = useState({});
 
-      return errors;
-    },
-  });
+  useEffect(() => {
+    setErrors(validate(values));
+  }, [validate, values]);
+
+  function handleChange(event) {
+    const fieldName = event.target.name;
+    const value = event.target.value;
+    setValues({
+      ...values,
+      [fieldName]: value,
+    });
+  }
+
+  function handleBlur(event) {
+    const fieldName = event.target.name;
+    setTouchedFields({
+      ...touched,
+      [fieldName]: true,
+    });
+  }
+
+  return {
+    values,
+    errors,
+    touched,
+    handleBlur,
+    setErrors,
+    handleChange,
+  };
+}
+
+export default function Form({ values }) {
+  Form.protoTypes = {
+    values: P.object,
+  };
 
   const navigate = useNavigate();
-
   const notification = useNotification();
+
+  const initialValues = {
+    name: values.name || "",
+    id: values.id || "",
+    email: values.email || "",
+    phone: values.phone || "",
+    status: values.status || "",
+  };
+
+  const validate = useCallback((field) => {
+    const errors = {};
+    if (Array.from(field.name).length < 3) errors.name = "Nome Curto demais";
+    if (isEmpty(field.name)) errors.name = "Campo nome é obrigatório";
+    if (!cpfValidator(field.id)) errors.id = "CPF Inválido.";
+    if (isEmpty(field.id)) errors.id = "Campo CPF é obrigatório.";
+    if (!emailValidator(field.email)) errors.email = "E-Mail Inválido.";
+    if (isEmpty(field.email)) errors.email = "Campo E-MAIL é obrigatório.";
+    if (!phoneValidator(field.phone))
+      errors.phone = "Número de telefone inválido";
+    if (isEmpty(field.status) || field.status.toLowerCase() === "selecione")
+      errors.status = "Selecione um status para o cliente.";
+
+    return errors;
+  }, []);
+
+  const form = useForm({
+    initialValues,
+    validate,
+  });
 
   const options = [
     { value: "", text: "Selecione" },
@@ -54,30 +95,31 @@ export default function Form(props) {
     { value: "waiting", text: "Aguardando" },
   ];
 
-  function submit() {
+  function submit(event) {
+    event.preventDefault();
     const isValid = Object.keys(form.errors);
-    if (isValid.length > 0)
-    {
+    if (isValid.length > 0) {
       notification.warning({
         text: "Algo está errado, favor preencher todos os campos corretamente antes de enviar o formulário",
         showButtonClose: false,
-        showProgressBar: false
+        showProgressBar: false,
       });
-      return
-    };
+      return;
+    }
 
-    submitForm(form.values, formType);
+    submitForm(form.values);
     notification.success({
       showButtonClose: false,
       showProgressBar: false,
-      text: `Sucesso ao Adicionar ${clientName(form.values.name)}`
+      text: `Sucesso `,
     });
+
     navigate("/");
   }
 
   return (
     <div className="form">
-      <form onSubmit={(event) => (event.preventDefault(), submit(event))}>
+      <form onSubmit={(event) => submit(event)}>
         <div className="fields">
           <div className="form-field">
             <input

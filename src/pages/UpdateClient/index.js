@@ -20,7 +20,7 @@ export default function UpdateClient() {
       <Header title="Clientes">
         <h3>Editar Cliente</h3>
       </Header>
-      <Form client={selectedClient} formType="update" />
+      <Form values={selectedClient} formType="update" />
     </div>
   );
 }
