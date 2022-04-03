@@ -49,7 +49,7 @@ function useForm({ initialValues, validate }) {
   };
 }
 
-function Form({ values }) {
+function Form({ values, formType }) {
   const navigate = useNavigate();
   const notification = useNotification();
 
@@ -100,7 +100,7 @@ function Form({ values }) {
       return;
     }
 
-    submitForm(form.values);
+    submitForm(form.values, formType);
     notification.success({
       showButtonClose: false,
       showProgressBar: false,
@@ -198,6 +198,7 @@ function Form({ values }) {
 
 Form.propTypes = {
   values: PropTypes.objectOf(PropTypes.string),
+  formType: PropTypes.string,
 };
 
 Form.defaultProps = {
@@ -208,6 +209,7 @@ Form.defaultProps = {
     phone: '',
     status: '',
   },
+  formType: '',
 };
 
 export default Form;

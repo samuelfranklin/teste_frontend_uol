@@ -102,14 +102,11 @@ const submitForm = (client, formType) => {
     case 'update':
       updateClient(client);
       break;
-    case 'create':
-      createClient(client);
-      break;
     case 'remove':
       removeClient(client);
       break;
     default:
-      throw new Error();
+      createClient(client);
   }
 };
 
