@@ -9,7 +9,7 @@ const getClientList = async () => {
     localStorage.setItem('clients', JSON.stringify(customers));
     return customers || [];
   } catch (error) {
-    throw new Error();
+    throw new Error(error);
   }
 };
 

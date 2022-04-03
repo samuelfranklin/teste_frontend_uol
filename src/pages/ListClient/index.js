@@ -19,20 +19,29 @@ export default function ListClient() {
         </div>
       </Header>
       <div className="card-list">
-        {clients.map((client) => (
-          <Card title={clientName(client.name)} subtitle={client.email} key={client.id}>
-            <div className="card-info">
-              <p>{client.id}</p>
-              <p>{client.phone}</p>
-            </div>
-            <div className="client-status">
-              {translateStatus(client.status)}
-            </div>
-            <div className="card-options">
-              <Link className="btn btn-outline" to={`/update-client/${client.id}`}>
-                editar
-              </Link>
-            </div>
+        {clients?.map((client) => (
+          <Card
+            title={clientName(client.name)}
+            subtitle={client.email}
+            key={client.id}
+          >
+            <>
+              <div className="card-info">
+                <p>{client.id}</p>
+                <p>{client.phone}</p>
+              </div>
+              <div className="client-status">
+                {translateStatus(client.status)}
+              </div>
+              <div className="card-options">
+                <Link
+                  className="btn btn-outline"
+                  to={`/update-client/${client.id}`}
+                >
+                  editar
+                </Link>
+              </div>
+            </>
           </Card>
         ))}
       </div>
