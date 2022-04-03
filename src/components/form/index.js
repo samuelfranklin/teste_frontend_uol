@@ -1,5 +1,5 @@
 import React, { useCallback, useState, useEffect } from 'react';
-import P from 'prop-types';
+import PropTypes from 'prop-types';
 import { Link, useNavigate } from 'react-router-dom';
 import { useNotification } from 'react-hook-notification';
 import { submitForm } from '../../services/clients';
@@ -49,11 +49,7 @@ function useForm({ initialValues, validate }) {
   };
 }
 
-export default function Form({ values }) {
-  Form.protoTypes = {
-    values: P.object,
-  };
-
+function Form({ values }) {
   const navigate = useNavigate();
   const notification = useNotification();
 
@@ -199,3 +195,19 @@ export default function Form({ values }) {
     </div>
   );
 }
+
+Form.propTypes = {
+  values: PropTypes.objectOf(PropTypes.string),
+};
+
+Form.defaultProps = {
+  values: {
+    name: '',
+    email: '',
+    id: '',
+    phone: '',
+    status: '',
+  },
+};
+
+export default Form;
