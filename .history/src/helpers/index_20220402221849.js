@@ -68,11 +68,11 @@ function cpfValidator(inputCpf) {
         % controlNumber);
 
     if (cont === 10) {
-      isValid = firstCheckDigit === sum || (firstCheckDigit === 0 && sum >= 10);
+      return firstCheckDigit === sum || (firstCheckDigit === 0 && sum >= 10);
     }
 
     if (cont === 11) {
-      isValid = secondCheckDigit === sum || (secondCheckDigit === 0 && sum >= 10);
+      return secondCheckDigit === sum || (secondCheckDigit === 0 && sum >= 10);
     }
 
     return isValid;

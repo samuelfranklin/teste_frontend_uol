@@ -1,4 +1,4 @@
-const isEmpty = (value) => {
+const isEmpty = function (value) {
   if (value === null) return true;
   if (value === undefined) return true;
   if (value === '') return true;
@@ -7,7 +7,7 @@ const isEmpty = (value) => {
   return false;
 };
 
-const isNull = (value) => {
+const isNull = function (value) {
   if (String(value) !== 'undefined' && value !== null) {
     return false;
   }
@@ -46,8 +46,7 @@ function cpfValidator(inputCpf) {
     return false;
   }
 
-  const validate = (cont) => {
-    let isValid = false;
+  function validate(cont) {
     let contHelper = cont;
     const controlNumber = 11;
     const firstCheckDigit = parseInt(cpf.substring(9, 10), 10);
@@ -68,15 +67,13 @@ function cpfValidator(inputCpf) {
         % controlNumber);
 
     if (cont === 10) {
-      isValid = firstCheckDigit === sum || (firstCheckDigit === 0 && sum >= 10);
+      return firstCheckDigit === sum || (firstCheckDigit === 0 && sum >= 10);
     }
 
     if (cont === 11) {
-      isValid = secondCheckDigit === sum || (secondCheckDigit === 0 && sum >= 10);
+      return secondCheckDigit === sum || (secondCheckDigit === 0 && sum >= 10);
     }
-
-    return isValid;
-  };
+  }
 
   const isValidFirstSecurityNumber = validate(10);
   const isValidFirstSecondNumber = validate(11);
@@ -94,7 +91,6 @@ function phoneValidator(phoneNumber) {
   const phone = clearStringNumbers(phoneNumber);
   const validator = /^[0-9]{2}[3][0-9]{7}|[0-9]{2}[9][0-9]{8}$/;
   const preValidator = /^[0-9]{2}[1]{8}|[0-9]{2}[2]{8}|[0-9]{2}[3]{8}|[0-9]{2}[4]{8}|[0-9]{2}[5]{8}|[0-9]{2}[6]{8}|[0-9]{2}[7]{8}|[0-9]{2}[9]{8}|[0-9]{2}[1]{9}|[0-9]{2}[2]{9}|[0-9]{2}[3]{9}|[0-9]{2}[4]{9}|[0-9]{2}[5]{9}|[0-9]{2}[6]{9}|[0-9]{2}[7]{9}|[0-9]{2}[9]{9}$/;
-
   return !preValidator.test(phone) && validator.test(phone);
 }
 

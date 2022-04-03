@@ -1,17 +1,17 @@
-import React, { useCallback, useState, useEffect } from "react";
-import P from "prop-types";
-import { Link, useNavigate } from "react-router-dom";
-import { submitForm } from "../../services/clients";
-import { useNotification } from "react-hook-notification";
+import React, { useCallback, useState, useEffect } from 'react';
+import P from 'prop-types';
+import { Link, useNavigate } from 'react-router-dom';
+import { useNotification } from 'react-hook-notification';
+import { submitForm } from '../../services/clients';
 
 import {
   isEmpty,
   cpfValidator,
   phoneValidator,
   emailValidator,
-} from "../../helpers";
+} from '../../helpers';
 
-import "./style.css";
+import './style.css';
 
 function useForm({ initialValues, validate }) {
   const [errors, setErrors] = useState(initialValues);
@@ -24,7 +24,7 @@ function useForm({ initialValues, validate }) {
 
   function handleChange(event) {
     const fieldName = event.target.name;
-    const value = event.target.value;
+    const { value } = event.target;
     setValues({
       ...values,
       [fieldName]: value,
@@ -58,25 +58,23 @@ export default function Form({ values }) {
   const notification = useNotification();
 
   const initialValues = {
-    name: values.name || "",
-    id: values.id || "",
-    email: values.email || "",
-    phone: values.phone || "",
-    status: values.status || "",
+    name: values.name || '',
+    id: values.id || '',
+    email: values.email || '',
+    phone: values.phone || '',
+    status: values.status || '',
   };
 
   const validate = useCallback((field) => {
     const errors = {};
-    if (Array.from(field.name).length < 3) errors.name = "Nome Curto demais";
-    if (isEmpty(field.name)) errors.name = "Campo nome é obrigatório";
-    if (!cpfValidator(field.id)) errors.id = "CPF Inválido.";
-    if (isEmpty(field.id)) errors.id = "Campo CPF é obrigatório.";
-    if (!emailValidator(field.email)) errors.email = "E-Mail Inválido.";
-    if (isEmpty(field.email)) errors.email = "Campo E-MAIL é obrigatório.";
-    if (!phoneValidator(field.phone))
-      errors.phone = "Número de telefone inválido";
-    if (isEmpty(field.status) || field.status.toLowerCase() === "selecione")
-      errors.status = "Selecione um status para o cliente.";
+    if (Array.from(field.name).length < 3) errors.name = 'Nome Curto demais';
+    if (isEmpty(field.name)) errors.name = 'Campo nome é obrigatório';
+    if (!cpfValidator(field.id)) errors.id = 'CPF Inválido.';
+    if (isEmpty(field.id)) errors.id = 'Campo CPF é obrigatório.';
+    if (!emailValidator(field.email)) errors.email = 'E-Mail Inválido.';
+    if (isEmpty(field.email)) errors.email = 'Campo E-MAIL é obrigatório.';
+    if (!phoneValidator(field.phone)) { errors.phone = 'Número de telefone inválido'; }
+    if (isEmpty(field.status) || field.status.toLowerCase() === 'selecione') { errors.status = 'Selecione um status para o cliente.'; }
 
     return errors;
   }, []);
@@ -87,11 +85,11 @@ export default function Form({ values }) {
   });
 
   const options = [
-    { value: "", text: "Selecione" },
-    { value: "inactive", text: "Desativado" },
-    { value: "active", text: "Ativo" },
-    { value: "disabled", text: "Desativado" },
-    { value: "waiting", text: "Aguardando" },
+    { value: '', text: 'Selecione' },
+    { value: 'inactive', text: 'Desativado' },
+    { value: 'active', text: 'Ativo' },
+    { value: 'disabled', text: 'Desativado' },
+    { value: 'waiting', text: 'Aguardando' },
   ];
 
   function submit(event) {
@@ -99,7 +97,7 @@ export default function Form({ values }) {
     const isValid = Object.keys(form.errors);
     if (isValid.length > 0) {
       notification.warning({
-        text: "Algo está errado, favor preencher todos os campos corretamente antes de enviar o formulário",
+        text: 'Algo está errado, favor preencher todos os campos corretamente antes de enviar o formulário',
         showButtonClose: false,
         showProgressBar: false,
       });
@@ -110,10 +108,10 @@ export default function Form({ values }) {
     notification.success({
       showButtonClose: false,
       showProgressBar: false,
-      text: `Sucesso `,
+      text: 'Sucesso ',
     });
 
-    navigate("/");
+    navigate('/');
   }
 
   return (

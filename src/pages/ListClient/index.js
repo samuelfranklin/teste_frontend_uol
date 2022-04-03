@@ -1,12 +1,12 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
-import { Card, Header } from "../../components";
-import { clientName, translateStatus } from "../../helpers";
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
+import { Card, Header } from '../../components';
+import { clientName, translateStatus } from '../../helpers';
 
-import "./style.css";
+import './style.css';
 
 export default function ListClient() {
-  const clientList = JSON.parse(localStorage.getItem("clients"));
+  const clientList = JSON.parse(localStorage.getItem('clients'));
   const [clients] = useState(clientList);
 
   return (

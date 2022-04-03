@@ -1,7 +1,7 @@
-import React from "react";
-import { Header, Form } from "../../components";
+import React from 'react';
+import { Header, Form } from '../../components';
 
-import "./style.css";
+import './style.css';
 
 export default function CreateClient() {
   return (

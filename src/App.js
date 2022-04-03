@@ -1,6 +1,6 @@
-import React from "react";
-import Router from "./routes";
-import { getClientList } from "./services/clients";
+import React from 'react';
+import Router from './routes';
+import { getClientList } from './services/clients';
 
 function App() {
   getClientList();

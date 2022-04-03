@@ -1,8 +1,8 @@
-import React from "react";
-import { BrowserRouter as BRouter, Routes, Route } from "react-router-dom";
-import ListClient from "./pages/ListClient";
-import CreateClient from "./pages/CreateClient";
-import UpdateClient from "./pages/UpdateClient";
+import React from 'react';
+import { BrowserRouter as BRouter, Routes, Route } from 'react-router-dom';
+import ListClient from './pages/ListClient';
+import CreateClient from './pages/CreateClient';
+import UpdateClient from './pages/UpdateClient';
 
 export default function Router() {
   return (

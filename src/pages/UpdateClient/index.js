@@ -1,9 +1,9 @@
-import React from "react";
-import { Header, Form } from "../../components";
-import { useParams } from "react-router-dom";
-import { getClient } from "../../services/clients";
+import React from 'react';
+import { useParams } from 'react-router-dom';
+import { Header, Form } from '../../components';
+import { getClient } from '../../services/clients';
 
-import "./style.css";
+import './style.css';
 
 export default function UpdateClient() {
   const { id } = useParams();
