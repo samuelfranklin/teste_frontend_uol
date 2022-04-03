@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { isNull } from '../helpers';
 
-const getClientList = async function () {
+const getClientList = async () => {
   try {
     const { customers } = await axios('/customers.json').then(
       (response) => response.data,
@@ -9,11 +9,11 @@ const getClientList = async function () {
     localStorage.setItem('clients', JSON.stringify(customers));
     return customers || [];
   } catch (error) {
-    console.error(error);
+    throw new Error();
   }
 };
 
-const getClient = function (clientId) {
+const getClient = (clientId) => {
   try {
     if (!clientId) {
       throw new Error({ status: 401, message: 'Não há cliente selecionado.' });
@@ -27,11 +27,11 @@ const getClient = function (clientId) {
     }
     return selectedClient;
   } catch (error) {
-    throw error;
+    throw new Error(error);
   }
 };
 
-const createClient = function (client) {
+const createClient = (client) => {
   try {
     if (!client) {
       throw new Error({
@@ -45,12 +45,11 @@ const createClient = function (client) {
     localStorage.setItem('clients', JSON.stringify(clients));
     return { message: 'cliente criado com sucesso', status: 'success' };
   } catch (error) {
-    console.error(error);
-    return error;
+    throw new Error(error);
   }
 };
 
-const updateClient = function (client) {
+const updateClient = (client) => {
   try {
     if (!client) {
       throw new Error({
@@ -70,12 +69,11 @@ const updateClient = function (client) {
     localStorage.setItem('clients', JSON.stringify(newClientList));
     return { message: 'cliente atualizado com sucesso', status: 'success' };
   } catch (error) {
-    console.error(error);
-    return error;
+    throw new Error(error);
   }
 };
 
-const removeClient = function (client) {
+const removeClient = (client) => {
   try {
     if (!client) {
       throw new Error({
@@ -95,12 +93,11 @@ const removeClient = function (client) {
     localStorage.setItem('clients', JSON.stringify(newClientList));
     return { message: 'cliente removido com sucesso', status: 'success' };
   } catch (error) {
-    console.error(error);
-    return error;
+    throw new Error(error);
   }
 };
 
-const submitForm = function (client, formType) {
+const submitForm = (client, formType) => {
   switch (formType) {
     case 'update':
       updateClient(client);
