@@ -9,7 +9,7 @@ export default function CreateClient() {
       <Header title="Clientes">
         <h3>Adicionar Cliente</h3>
       </Header>
-      <Form values={{}} formType="create" />
+      <Form values={{}} />
     </div>
   );
 }

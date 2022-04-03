@@ -39,77 +39,18 @@ const createClient = (client) => {
         status: 'error',
       });
     }
+
     const clients = JSON.parse(localStorage.getItem('clients'));
     clients.push(client);
-    localStorage.clear();
+
     localStorage.setItem('clients', JSON.stringify(clients));
+
     return { message: 'cliente criado com sucesso', status: 'success' };
   } catch (error) {
     throw new Error(error);
   }
 };
 
-const updateClient = (client) => {
-  try {
-    if (!client) {
-      throw new Error({
-        message: 'Nenhum cliente selecionado',
-        status: 'error',
-      });
-    }
-
-    const clientList = JSON.parse(localStorage.getItem('clients'));
-    if (!clientList.find(({ id }) => id === client.id)) {
-      throw new Error({ message: 'Cliente não encontrado', status: 'error' });
-    }
-
-    const newClientList = clientList.filter(({ id }) => id !== client.id);
-    newClientList.push(client);
-    localStorage.clear();
-    localStorage.setItem('clients', JSON.stringify(newClientList));
-    return { message: 'cliente atualizado com sucesso', status: 'success' };
-  } catch (error) {
-    throw new Error(error);
-  }
-};
-
-const removeClient = (client) => {
-  try {
-    if (!client) {
-      throw new Error({
-        message: 'Nenhum cliente selecionado',
-        status: 'error',
-      });
-    }
-    const clientList = JSON.parse(localStorage.getItem('clients'));
-    if (!clientList.find(({ id }) => id === client.id)) {
-      throw new Error({
-        message: 'Cliente não encontrado',
-        status: 'error',
-      });
-    }
-    const newClientList = clientList.filter(({ id }) => id !== client.id);
-    localStorage.clear();
-    localStorage.setItem('clients', JSON.stringify(newClientList));
-    return { message: 'cliente removido com sucesso', status: 'success' };
-  } catch (error) {
-    throw new Error(error);
-  }
-};
-
-const submitForm = (client, formType) => {
-  switch (formType) {
-    case 'update':
-      updateClient(client);
-      break;
-    case 'remove':
-      removeClient(client);
-      break;
-    default:
-      createClient(client);
-  }
-};
-
 export {
-  getClientList, getClient, createClient, updateClient, submitForm,
+  getClientList, getClient, createClient,
 };

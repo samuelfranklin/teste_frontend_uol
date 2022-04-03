@@ -2,7 +2,7 @@ import React, { useCallback, useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Link, useNavigate } from 'react-router-dom';
 import { useNotification } from 'react-hook-notification';
-import { submitForm } from '../../services/clients';
+import { createClient } from '../../services/clients';
 
 import {
   isEmpty,
@@ -49,7 +49,7 @@ function useForm({ initialValues, validate }) {
   };
 }
 
-function Form({ values, formType }) {
+function Form({ values }) {
   const navigate = useNavigate();
   const notification = useNotification();
 
@@ -100,7 +100,7 @@ function Form({ values, formType }) {
       return;
     }
 
-    submitForm(form.values, formType);
+    createClient(form.values);
     notification.success({
       showButtonClose: false,
       showProgressBar: false,
@@ -198,7 +198,6 @@ function Form({ values, formType }) {
 
 Form.propTypes = {
   values: PropTypes.objectOf(PropTypes.string),
-  formType: PropTypes.string,
 };
 
 Form.defaultProps = {
@@ -209,7 +208,6 @@ Form.defaultProps = {
     phone: '',
     status: '',
   },
-  formType: '',
 };
 
 export default Form;
