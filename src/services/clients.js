@@ -38,9 +38,15 @@ const createClient = (client) => {
       });
     }
 
-    const clients = JSON.parse(localStorage.getItem('clients'));
-    clients.push(client);
+    let clients = JSON.parse(localStorage.getItem('clients'));
 
+    if (isNull(clients)) {
+      clients = [client];
+      localStorage.setItem('clients', JSON.stringify(clients));
+      return { message: 'cliente criado com sucesso', status: 'success' };
+    }
+
+    clients.push(client);
     localStorage.setItem('clients', JSON.stringify(clients));
 
     return { message: 'cliente criado com sucesso', status: 'success' };
