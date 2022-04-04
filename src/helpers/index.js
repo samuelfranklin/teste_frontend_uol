@@ -85,7 +85,7 @@ function cpfValidator(inputCpf) {
 }
 
 function emailValidator(email) {
-  const validator = /^[a-z0-9.]+[@][a-z0-9]+[.][a-z]+([.][a-z]+)?$/;
+  const validator = /^[a-z0-9]+(([^a-zA-Z@ 0-9]+[a-z0-9]+)+)?([@][a-z0-9]+)([.a-z]+)([a-z0-9])?$/gm;
   return validator.test(email);
 }
 
