@@ -1,8 +1,9 @@
+import './style.css';
 import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { Link, useNavigate } from 'react-router-dom';
 import { useNotification } from 'react-hook-notification';
-import { createClient } from '../../services/clients';
+import { createClient, updateClient } from '../../services/clients';
 import useForm from './Hooks/useForm';
 
 import {
@@ -12,9 +13,7 @@ import {
   emailValidator,
 } from '../../helpers';
 
-import './style.css';
-
-function Form({ values }) {
+function Form({ values, formType }) {
   const navigate = useNavigate();
   const notification = useNotification();
 
@@ -65,7 +64,12 @@ function Form({ values }) {
       return;
     }
 
-    createClient(form.values);
+    if (formType === 'update') {
+      updateClient(form.values);
+    } else {
+      createClient(form.values);
+    }
+
     notification.success({
       showButtonClose: false,
       showProgressBar: false,
@@ -163,6 +167,7 @@ function Form({ values }) {
 
 Form.propTypes = {
   values: PropTypes.objectOf(PropTypes.string),
+  formType: PropTypes.string,
 };
 
 Form.defaultProps = {
@@ -173,6 +178,7 @@ Form.defaultProps = {
     phone: '',
     status: '',
   },
+  formType: 'create',
 };
 
 export default Form;

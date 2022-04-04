@@ -1,35 +1,52 @@
 import axios from 'axios';
-import { isNull } from '../helpers';
+import { isNull, getItem, setItem } from '../helpers';
 
-const getClientList = async () => {
-  try {
-    const { customers } = await axios('https://test-frontend-uolpp.web.app/customers.json').then((response) => response.data);
-    localStorage.setItem('clients', JSON.stringify(customers));
-    return customers || [];
-  } catch (error) {
-    throw new Error(error);
-  }
+export const getClientList = async () => {
+  await axios('https://test-frontend-uolpp.web.app/customers.json')
+    .then(({ data }) => {
+      setItem('clients', data.customers);
+      return data.customers || [];
+    })
+    .catch((error) => {
+      throw new Error(error);
+    });
 };
 
-const getClient = (clientId) => {
+export const getClient = (clientId) => {
   try {
     if (!clientId) {
       throw new Error({ status: 401, message: 'Não há cliente selecionado.' });
     }
 
-    const clientList = JSON.parse(localStorage.getItem('clients'));
+    const clientList = getItem('clients');
     const selectedClient = clientList.find((client) => client.id === clientId);
 
     if (isNull(selectedClient)) {
       throw new Error({ status: 404, message: 'Cliente não encontrado.' });
     }
+
     return selectedClient;
   } catch (error) {
     throw new Error(error);
   }
 };
 
-const createClient = (client) => {
+export const updateClient = (client) => {
+  const clients = getItem('clients');
+
+  if (!clients.find(({ id }) => id === client.id)) {
+    throw new Error({ message: 'Cliente não encontrado', status: 'error' });
+  }
+
+  const newClients = clients.filter(({ id }) => id !== client.id);
+  newClients.push(client);
+
+  setItem('clients', newClients);
+
+  return { message: `Cliente ${client.name} adicionado com sucesso`, status: 'success' };
+};
+
+export const createClient = (client) => {
   try {
     if (!client) {
       throw new Error({
@@ -38,23 +55,19 @@ const createClient = (client) => {
       });
     }
 
-    let clients = JSON.parse(localStorage.getItem('clients'));
+    let clients = getItem('clients');
 
     if (isNull(clients)) {
       clients = [client];
-      localStorage.setItem('clients', JSON.stringify(clients));
+      setItem('clients', clients);
       return { message: 'cliente criado com sucesso', status: 'success' };
     }
 
     clients.push(client);
-    localStorage.setItem('clients', JSON.stringify(clients));
+    setItem('clients', clients);
 
     return { message: 'cliente criado com sucesso', status: 'success' };
   } catch (error) {
     throw new Error(error);
   }
-};
-
-export {
-  getClientList, getClient, createClient,
 };

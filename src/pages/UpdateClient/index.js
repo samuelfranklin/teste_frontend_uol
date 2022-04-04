@@ -15,7 +15,7 @@ export default function UpdateClient() {
       <Header title="Clientes">
         <h3>Editar Cliente</h3>
       </Header>
-      <Form values={selectedClient} />
+      <Form values={selectedClient} formType="update" />
     </div>
   );
 }
