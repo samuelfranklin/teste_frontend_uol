@@ -1,4 +1,7 @@
-const isEmpty = (value) => {
+export const setItem = (item, data) => localStorage.setItem(item, JSON.stringify(data));
+export const getItem = (item) => JSON.parse(localStorage.getItem(item));
+
+export const isEmpty = (value) => {
   if (value === null) return true;
   if (value === undefined) return true;
   if (value === '') return true;
@@ -7,25 +10,25 @@ const isEmpty = (value) => {
   return false;
 };
 
-const isNull = (value) => {
+export const isNull = (value) => {
   if (String(value) !== 'undefined' && value !== null) {
     return false;
   }
   return true;
 };
 
-function clientName(nomeCompleto) {
+export function clientName(nomeCompleto) {
   const nome = nomeCompleto.split(' ')[0];
   const qtdNome = nomeCompleto.split(' ').length;
   const sobrenome = nomeCompleto.split(' ')[qtdNome - 1];
   return `${nome} ${sobrenome}`;
 }
 
-function clearStringNumbers(text) {
+export function clearStringNumbers(text) {
   return text.replace(/[^0-9]/g, '');
 }
 
-function cpfValidator(inputCpf) {
+export function cpfValidator(inputCpf) {
   if (isEmpty(inputCpf)) return false;
 
   const cpf = clearStringNumbers(inputCpf);
@@ -84,12 +87,12 @@ function cpfValidator(inputCpf) {
   return isValidFirstSecurityNumber && isValidFirstSecondNumber;
 }
 
-function emailValidator(email) {
+export function emailValidator(email) {
   const validator = /^[a-z0-9]+(([^a-zA-Z@ 0-9]+[a-z0-9]+)+)?([@][a-z0-9]+)([.a-z]+)([a-z0-9])?$/gm;
   return validator.test(email);
 }
 
-function phoneValidator(phoneNumber) {
+export function phoneValidator(phoneNumber) {
   if (isEmpty(phoneNumber)) return false;
   const phone = clearStringNumbers(phoneNumber);
   const validator = /^[0-9]{2}[3][0-9]{7}|[0-9]{2}[9][0-9]{8}$/;
@@ -98,7 +101,7 @@ function phoneValidator(phoneNumber) {
   return !preValidator.test(phone) && validator.test(phone);
 }
 
-function translateStatus(status) {
+export function translateStatus(status) {
   switch (status) {
     case 'active':
       return 'Ativo';
@@ -112,13 +115,3 @@ function translateStatus(status) {
       throw new Error();
   }
 }
-
-export {
-  isEmpty,
-  isNull,
-  cpfValidator,
-  emailValidator,
-  phoneValidator,
-  clientName,
-  translateStatus,
-};
