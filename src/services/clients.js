@@ -5,7 +5,7 @@ export const getClientList = async () => {
   await axios('https://test-frontend-uolpp.web.app/customers.json')
     .then(({ data }) => {
       setItem('clients', data.customers);
-      return data.customers || [];
+      return data.customers;
     })
     .catch((error) => {
       throw new Error(error);

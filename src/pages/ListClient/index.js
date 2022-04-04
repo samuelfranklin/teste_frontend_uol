@@ -1,6 +1,6 @@
 import './style.css';
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Card, Header } from '../../components';
 import { clientName, translateStatus, getItem } from '../../helpers';
 
@@ -17,7 +17,7 @@ export default function ListClient() {
         </div>
       </Header>
       <div className="card-list">
-        {clients?.map((client) => (
+        {clients && clients.map((client) => (
           <Card
             title={clientName(client.name)}
             subtitle={client.email}
@@ -42,6 +42,7 @@ export default function ListClient() {
             </>
           </Card>
         ))}
+        {!clients && useNavigate('/create-client') }
       </div>
     </div>
   );
